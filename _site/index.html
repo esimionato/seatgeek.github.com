@@ -4,6 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <link rel="shortcut icon" href="http://seatgeek.com/favicon.ico" />
     <title>SeatGeek Developer Resources - Home</title>
     <link href="/css/base.css" media="screen" rel="stylesheet" type="text/css" />
     <link href="/css/style.css" media="screen" rel="stylesheet" type="text/css" />
@@ -12,12 +13,11 @@
     <div id="header" class="basic">
       <div class="site">
         <div class="logo">
-          <a href="/"><img src="http://cdn.seatgeek.com/images/logoStd2.png" alt="SeatGeek" /></a>
+          <a href="/"><img src="http://seatgeek.com/images/logoStd2.png" alt="SeatGeek" /></a>
         </div>
-        <ul class="nav">
-          <!-- <li><a href="http://support.github.com/">Support</a></li> -->
-          <li><a href="http://seatgeek.com/">Back to SeatGeek</a></li>
-        </ul>
+        <div class="nav">
+          <a href="http://seatgeek.com/">Back to SeatGeek</a>
+        </div>
       </div>
     </div>
     <div id="main"> 
@@ -31,33 +31,80 @@
   <h2>Available API methods</h2>
   <p>Here's an index of the API methods you can use to access events and associated data using the SeatGeek API.</p>
   <ul>
-    <li><a href="#api__in-your-area">Events in your area</a></li>
-    <li><a href="#api__upcoming-for-teamband">Events upcoming for team/band</a></li>
+    <li><a href="#api__events__in_your_area">Events in your area</a></li>
+    <li><a href="#api__events__upcoming_for_category">Events upcoming for team/band</a></li>
   </ul>
-  <p>In addition to the method-specific details below, all API methods support a <code>limit</code> parameter</p>
+  <p>The general url scheme for api calls is <code>/:version/:namespace/:method.:format</code>. Arguments are specified in the querystring. The two supported formats are xml and json.</p>
+  <p>In addition to the method-specific details below, all API methods support a <code>limit</code> parameter.</p>
 </div>
 
-<div id="api__in-your-area">
+<div id="api__events__in_your_area">
   <h3>Events in your area</h3>
   <p>Returns events near a user. Locate a user by geolocating their IP (first example &ndash; useful for widgets and other code running in the browser), a zipcode, by specifying an IP to geolocate, or by passing their latitude and longitude directly.</p>
-  <p>You may also limit events to a specific category by passing an optional <code>category</code> parameter.</p>
   <pre><code>http://api.seatgeek.com/1/events/in_your_area.json</code></pre>
   <pre><code>http://api.seatgeek.com/1/events/in_your_area.json?zipcode=90210</code></pre>
   <pre><code>http://api.seatgeek.com/1/events/in_your_area.json?ip=50.16.199.107</code></pre>
   <pre><code>http://api.seatgeek.com/1/events/in_your_area.json?latitude=40.7141&amp;longitude=-74.0063</code></pre>
+  <p>You may also limit events to a specific category by passing an optional <code>category</code> parameter.</p>
+  <pre><code># Currently supported categories:
+# all, sports, major_sports, ncaa_sports, concerts,
+# mlb, nba, nfl, nhl, mls,
+# ncaa_basketball, ncaa_football, ncaa_baseball, ncaa_hockey, ncaa_soccer,
+# nascar,
+# tennis,
+# golf, pga, lpga,
+# theater
+http://api.seatgeek.com/1/events/in_your_area.json?category=mlb</code></pre>
 </div>
 
-<div id="api__upcoming-for-teamband">
+<div id="api__events__upcoming_for_category">
   <h3>Events upcoming for team/band</h3>
-  <p>Returns upcoming events for a team/band. Specify a team/band by id or slug (the url-friendly names you'll find in urls like <a href="http://seatgeek.com/new-york-yankees-tickets/">http://seatgeek.com/new-york-yankees-tickets/</a>)</p>
+  <p>Returns upcoming events for a team/band. Specify a team/band by <code>id</code> or <code>slug</code> (the url-friendly names you'll find in urls like <a href="http://seatgeek.com/new-york-yankees-tickets/">http://seatgeek.com/new-york-yankees-tickets/</a>)</p>
   <pre><code>http://api.seatgeek.com/1/events/upcoming_for_teamband.json?id=8</code></pre>
   <pre><code>http://api.seatgeek.com/1/events/upcoming_for_teamband.json?slug=new-york-giants</code></pre>
 </div>
 
 <div id="affiliate-info">
   <h2>Api info for affiliates</h2>
+  <p>All methods support the <code>aid</code> (affiliate id) parameter for convenience. Passing an <code>aid</code> will "affiliatize" all generated urls in the API payload. For example, a request to:</p>
+  <pre><code>http://api.seatgeek.com/1/events/upcoming_for_teamband.json?slug=johnmayer&amp;aid=1</pre></code>
+  <p>will return an xml payload with urls like:</p>
+  <pre><code>{
+    name: New York Yankees
+    slug: new-york-yankees
+    url: http://seatgeek.com/new-york-yankees-tickets/?aid=1
+    events: [
+        {
+            id: 500601
+            title: Chicago White Sox at New York Yankees
+            short_title: White Sox @ Yankees
+            forecast: fall
+            numeric_forecast: 1
+            url: http://seatgeek.com/chicago-white-sox-at-new-york-yankees-tickets/mlb/2011-04-25/500601/?aid=1
+            lowest_price: 7
+            average_price: 38
+            highest_price: 13118
+            venue_name: Yankee Stadium
+            venue_address: One East 161st St.
+            venue_location: Bronx, NY
+            latitude: 40.8269988364
+            longitude: -73.9277368784
+            datetime: Monday April 25, 2011 at 7:05 pm
+            date: April 25 2011
+            time: 7:05 pm
+            timestamp: 1303758300
+            type: mlb
+            tv_channels: null
+            created_at: 2010-11-30 21:07:07
+            updated_at: 2011-04-13 15:53:26
+        }
+    ]
+}</code></pre>
 </div>
       </div>
+    </div>
+    <div id="footer">
+      <a href="http://seatgeek.com/">Back to SeatGeek</a>
     </div>
   </body>
 </html>

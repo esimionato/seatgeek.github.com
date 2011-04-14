@@ -20,7 +20,8 @@ a:hover {
   height:46px;
 }
 #header .site,
-#main .content {
+#main .content,
+#footer {
   margin:0 auto;
   width:800px;
 }
@@ -30,7 +31,16 @@ a:hover {
 }
 #header .nav {
   float:right;
-  padding-right:10px;
+  font-size:14px;
+  padding:10px 10px 0 0;
+}
+#main {
+  margin-bottom:60px;
+}
+#footer {
+  font-size:14px;
+  border-top:3px solid #ddd;
+  padding:20px 0;
 }
 
 .content h1,
@@ -72,4 +82,8 @@ a:hover {
   background:#eee;
   border:2px solid #ddd;
   padding:5px;
+  overflow-x:auto;
+}
+.content p code {
+  background:#eee;
 }
