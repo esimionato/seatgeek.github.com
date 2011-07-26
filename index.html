@@ -38,13 +38,21 @@ title: Home
 http://api.seatgeek.com/1/events/in_your_area.json?category=mlb</code></pre>
 </div>
 
-<div id="api__events__upcoming_for_category">
+<div id="api__events__upcoming_for_teamband">
   <h3>Events upcoming for team/band</h3>
   <p>Returns upcoming events for a team/band. Specify a team/band by <code>id</code> or <code>slug</code> (the url-friendly names you'll find in urls like <a href="http://seatgeek.com/new-york-yankees-tickets/">http://seatgeek.com/new-york-yankees-tickets/</a>)</p>
   <pre><code>http://api.seatgeek.com/1/events/upcoming_for_teamband.json?id=8</code></pre>
   <pre><code>http://api.seatgeek.com/1/events/upcoming_for_teamband.json?slug=new-york-yankees</code></pre>
   <p>You can also limit the total number or adjust the offset in order to paginate the returned results.</p>
   <pre><code>http://api.seatgeek.com/1/events/upcoming_for_teamband.json?slug=new-york-yankees&amp;limit=5&amp;offset=10</code></pre>
+</div>
+
+<div id="api__events__upcoming_for_category">
+  <h3>Events upcoming for a category</h3>
+  <p>Returns upcoming events for a particular category.</p>
+  <pre><code>http://api.seatgeek.com/1/events/upcoming_for_category.json?category=theater</code></pre>
+  <p>You can also limit the total number or adjust the offset in order to paginate the returned results.</p>
+  <pre><code>http://api.seatgeek.com/1/events/upcoming_for_category.json?category=mlb&amp;limit=5&amp;offset=10</code></pre>
 </div>
 
 <div id="affiliate-info">
