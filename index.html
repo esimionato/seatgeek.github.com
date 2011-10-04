@@ -234,6 +234,20 @@ http://api.seatgeek.com/1/events/upcoming_for_teamband.json?slug=new-york-yankee
       </ul>
     </li>
 
+    <li><strong>order</strong>: Field to order by
+      <ul>
+        <li>Default: score</li>
+        <li>Options:
+<pre><code># score
+# date</code></pre>
+        </li>
+        <li>Type: String</li>
+        <li>Example:
+          <pre><code>http://api.seatgeek.com/1/events/upcoming_for_category.json?category=nfl&amp;order=date</code></pre>
+        </li>
+      </ul>
+    </li>
+
     <li><strong>offset</strong>: Number of events to skip. Useful for pagination.
       <ul>
         <li>Default: 0</li>
