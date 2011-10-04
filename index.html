@@ -13,7 +13,8 @@ title: Home
   <p>Here's an index of the API methods you can use to access events and associated data using the SeatGeek API.</p>
   <ul>
     <li><a href="#api__events__in_your_area">Events in your area</a></li>
-    <li><a href="#api__events__upcoming_for_category">Events upcoming for team/band</a></li>
+    <li><a href="#api__events__upcoming_for_teamband">Events upcoming for team/band<a></li>
+    <li><a href="#api__events__upcoming_for_category">Events upcoming for a category</a></li>
   </ul>
   <p>The general url scheme for api calls is <code>/:version/:namespace/:method.:format</code>. Arguments are specified in the querystring. The two supported formats are xml and json.</p>
   <p>In addition to the method-specific details below, all API methods support a <code>limit</code> parameter.</p>
@@ -21,38 +22,249 @@ title: Home
 
 <div id="api__events__in_your_area">
   <h3>Events in your area</h3>
-  <p>Returns events near a user. Locate a user by geolocating their IP (first example &ndash; useful for widgets and other code running in the browser), a zipcode, by specifying an IP to geolocate, or by passing their latitude and longitude directly.</p>
+
   <pre><code>http://api.seatgeek.com/1/events/in_your_area.json</code></pre>
-  <pre><code>http://api.seatgeek.com/1/events/in_your_area.json?zipcode=90210</code></pre>
-  <pre><code>http://api.seatgeek.com/1/events/in_your_area.json?ip=50.16.199.107</code></pre>
-  <pre><code>http://api.seatgeek.com/1/events/in_your_area.json?latitude=40.7141&amp;longitude=-74.0063</code></pre>
-  <p>You may also limit events to a specific category by passing an optional <code>category</code> parameter.</p>
-  <pre><code># Currently supported categories:
-# all, sports, major_sports, ncaa_sports, concerts,
+
+  <p>Returns events near a user. Locate a user by geolocating their IP (first example &ndash; useful for widgets and other code running in the browser), a zipcode, by specifying an IP to geolocate, or by passing their latitude and longitude directly.</p>
+
+  <h4>Options</h4>
+  <p>The following are all valid options to this api request:</p>
+
+  <ul>
+    <li><strong>zipcode</strong>: US Zip Code. If no location is set, or we are unable to geolocate users, the location will set to the default zip code.
+      <ul>
+        <li>Default: 10038</li>
+        <li>Type: 5-digit US Zip Code</li>
+        <li>Example:
+          <pre><code>http://api.seatgeek.com/1/events/in_your_area.json?zipcode=90210</code></pre>
+        </li>
+      </ul>
+    </li>
+
+    <li><strong>latitude|longitude</strong>: Latitude and Longitude coordinates. Both must be specified, otherwise they are ignored
+      <ul>
+        <li>Default: None</li>
+        <li>Type: Floating Point numbers, such as 40.7141</li>
+        <li>Example:
+          <pre><code>http://api.seatgeek.com/1/events/in_your_area.json?latitude=40.7141&amp;longitude=-74.0063</code></pre>
+        </li>
+      </ul>
+    </li>
+
+    <li><strong>ip</strong>: A specific IP address to Geolocate. Note that this may sometimes give incorrect event listings, and therefore a zipcode or coordinates are preferred.
+      <ul>
+        <li>Default: Requesting IP Address</li>
+        <li>Type: IPv4-style IP Address</li>
+        <li>Example:
+          <pre><code>http://api.seatgeek.com/1/events/in_your_area.json?ip=50.16.199.107</code></pre>
+        </li>
+      </ul>
+    </li>
+
+    <li><strong>category</strong>: All unsupported categories will result in a 404 response.
+      <ul>
+        <li>Default: 'all'</li>
+        <li>Type: String</li>
+        <li>Options:
+<pre><code># all, sports, major_sports, ncaa_sports, concerts,
 # mlb, nba, nfl, nhl, mls,
 # ncaa_basketball, ncaa_football, ncaa_baseball, ncaa_hockey, ncaa_soccer,
 # nascar,
 # tennis,
 # golf, pga, lpga,
 # theater
-http://api.seatgeek.com/1/events/in_your_area.json?category=mlb</code></pre>
+</code></pre>
+        </li>
+        <li>Example:
+          <pre><code>http://api.seatgeek.com/1/events/in_your_area.json?category=mlb</code></pre>
+        </li>
+      </ul>
+    </li>
+
+    <li><strong>range</strong>: Range for geolocated events. Unit is in miles.
+      <ul>
+        <li>Default: 45</li>
+        <li>Type: Integer</li>
+        <li>Example:
+          <pre><code>http://api.seatgeek.com/1/events/in_your_area.json?range=5</code></pre>
+        </li>
+      </ul>
+    </li>
+
+    <li><strong>limit</strong>: Number of events to retrieve.
+      <ul>
+        <li>Default: 3</li>
+        <li>Max: 100</li>
+        <li>Type: Integer</li>
+        <li>Example:
+          <pre><code>http://api.seatgeek.com/1/events/in_your_area.json?limit=10</code></pre>
+        </li>
+      </ul>
+    </li>
+
+    <li><strong>aid</strong>: Affiliate id for the api request
+      <ul>
+        <li>Default: None</li>
+        <li>Type: Integer</li>
+        <li>Example:
+          <pre><code>http://api.seatgeek.com/1/events/in_your_area.json?aid=478</code></pre>
+        </li>
+      </ul>
+    </li>
+  </ul>
 </div>
 
 <div id="api__events__upcoming_for_teamband">
   <h3>Events upcoming for team/band</h3>
+  <pre><code>http://api.seatgeek.com/1/events/upcoming_for_teamband.json?slug=carolina-panthers</code></pre>
+
   <p>Returns upcoming events for a team/band. Specify a team/band by <code>id</code> or <code>slug</code> (the url-friendly names you'll find in urls like <a href="http://seatgeek.com/new-york-yankees-tickets/">http://seatgeek.com/new-york-yankees-tickets/</a>)</p>
-  <pre><code>http://api.seatgeek.com/1/events/upcoming_for_teamband.json?id=8</code></pre>
-  <pre><code>http://api.seatgeek.com/1/events/upcoming_for_teamband.json?slug=new-york-yankees</code></pre>
-  <p>You can also limit the total number or adjust the offset in order to paginate the returned results.</p>
-  <pre><code>http://api.seatgeek.com/1/events/upcoming_for_teamband.json?slug=new-york-yankees&amp;limit=5&amp;offset=10</code></pre>
+
+  <h4>Options</h4>
+  <p>The following are all valid options to this api request:</p>
+
+  <ul>
+    <li><strong>id</strong>: SeatGeek Team or Band ID. If querying for sports teams, you can also specify multiple teams by separating them via a <code>^</code> character
+      <ul>
+        <li>Default: None</li>
+        <li>Type: Integer</li>
+        <li>Example:
+<pre><code>http://api.seatgeek.com/1/events/upcoming_for_teamband.json?id=8
+http://api.seatgeek.com/1/events/upcoming_for_teamband.json?id=8^2</code></pre>
+        </li>
+      </ul>
+    </li>
+
+    <li><strong>slug</strong>: SeatGeek Team or Band slug. If querying for sports teams, you can also specify multiple teams by separating them via a <code>^</code> character.
+      <ul>
+        <li>Default: None</li>
+        <li>Type: String</li>
+        <li>Example:
+<pre><code>http://api.seatgeek.com/1/events/upcoming_for_teamband.json?slug=new-york-yankees
+http://api.seatgeek.com/1/events/upcoming_for_teamband.json?slug=new-york-yankees^atlanta-braves</code></pre>
+        </li>
+      </ul>
+    </li>
+
+    <!-- <li><strong>myspace_slug</strong>: A Myspace slug that maps to one of our Bands.
+      <ul>
+        <li>Default: None</li>
+        <li>Type: String</li>
+        <li>Example:
+          <pre><code>http://api.seatgeek.com/1/events/upcoming_for_teamband.json?myspace_slug=10years</code></pre>
+        </li>
+      </ul>
+    </li> -->
+
+    <li><strong>location</strong>: For sports events, specifies whether the events should be all games or just home games.
+      <ul>
+        <li>Default: If querying for multiple teams, all, otherwise home.</li>
+        <li>Options:
+<pre><code># all
+# home</code></pre>
+        </li>
+        <li>Type: String</li>
+        <li>Example:
+          <pre><code>http://api.seatgeek.com/1/events/upcoming_for_teamband.json?location=all</code></pre>
+        </li>
+      </ul>
+    </li>
+
+    <li><strong>days_out</strong>: Number of days away returned events should be.
+      <ul>
+        <li>Default: 6</li>
+        <li>Type: Integer</li>
+        <li>Example:
+          <pre><code>http://api.seatgeek.com/1/events/upcoming_for_teamband.json?zipcode=90210</code></pre>
+        </li>
+      </ul>
+    </li>
+
+    <li><strong>limit</strong>: Number of events to retrieve.
+      <ul>
+        <li>Default: 5</li>
+        <li>Max: 100</li>
+        <li>Type: Integer</li>
+        <li>Example:
+          <pre><code>http://api.seatgeek.com/1/events/upcoming_for_teamband.json?limit=10</code></pre>
+        </li>
+      </ul>
+    </li>
+
+    <li><strong>aid</strong>: Affiliate id for the api request
+      <ul>
+        <li>Default: None</li>
+        <li>Type: Integer</li>
+        <li>Example:
+          <pre><code>http://api.seatgeek.com/1/events/upcoming_for_teamband.json?aid=478</code></pre>
+        </li>
+      </ul>
+    </li>
+  </ul>
 </div>
 
 <div id="api__events__upcoming_for_category">
   <h3>Events upcoming for a category</h3>
-  <p>Returns upcoming events for a particular category.</p>
-  <pre><code>http://api.seatgeek.com/1/events/upcoming_for_category.json?category=theater</code></pre>
-  <p>You can also limit the total number or adjust the offset in order to paginate the returned results.</p>
   <pre><code>http://api.seatgeek.com/1/events/upcoming_for_category.json?category=mlb&amp;limit=5&amp;offset=10</code></pre>
+
+  <p>Returns upcoming events for a particular category.</p>
+
+  <h4>Options</h4>
+  <p>The following are all valid options to this api request:</p>
+
+  <ul>
+    <li><strong>category</strong>: All unsupported categories will result in a 404 response.
+      <ul>
+        <li>Default: 'all'</li>
+        <li>Type: String</li>
+        <li>Required: Yes</li>
+        <li>Options:
+<pre><code># all, sports, major_sports, ncaa_sports, concerts,
+# mlb, nba, nfl, nhl, mls,
+# ncaa_basketball, ncaa_football, ncaa_baseball, ncaa_hockey, ncaa_soccer,
+# nascar,
+# tennis,
+# golf, pga, lpga,
+# theater
+</code></pre>
+        </li>
+        <li>Example:
+          <pre><code>http://api.seatgeek.com/1/events/upcoming_for_category.json?category=nfl</code></pre>
+        </li>
+      </ul>
+    </li>
+
+    <li><strong>offset</strong>: Number of events to skip. Useful for pagination.
+      <ul>
+        <li>Default: 0</li>
+        <li>Type: Integer</li>
+        <li>Example:
+          <pre><code>http://api.seatgeek.com/1/events/upcoming_for_category.json?category=nfl&amp;offset=10</code></pre>
+        </li>
+      </ul>
+    </li>
+
+    <li><strong>limit</strong>: Number of events to retrieve.
+      <ul>
+        <li>Default: 5</li>
+        <li>Max: 100</li>
+        <li>Type: Integer</li>
+        <li>Example:
+          <pre><code>http://api.seatgeek.com/1/events/upcoming_for_category.json?category=nfl&amp;limit=10</code></pre>
+        </li>
+      </ul>
+    </li>
+
+    <li><strong>aid</strong>: Affiliate id for the api request
+      <ul>
+        <li>Default: None</li>
+        <li>Type: Integer</li>
+        <li>Example:
+          <pre><code>http://api.seatgeek.com/1/events/upcoming_for_category.json?category=nfl&amp;aid=478</code></pre>
+        </li>
+      </ul>
+    </li>
+  </ul>
 </div>
 
 <div id="affiliate-info">
