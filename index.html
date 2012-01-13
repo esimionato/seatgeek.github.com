@@ -298,31 +298,32 @@ http://api.seatgeek.com/1/events/upcoming_for_teamband.json?slug=new-york-yankee
   <pre><code>http://api.seatgeek.com/1/events/upcoming_for_teamband.json?slug=new-york-yankees&amp;limit=1&amp;aid=1</pre></code>
   <p>will return a payload like:</p>
   <pre><code>{
-    name: New York Yankees
-    slug: new-york-yankees
-    url: http://seatgeek.com/new-york-yankees-tickets/?aid=1
+    name: "New York Yankees",
+    slug: "new-york-yankees",
+    url: "http://seatgeek.com/new-york-yankees-tickets/?aid=1",
     events: [
         {
-            id: 500601
-            title: Chicago White Sox at New York Yankees
-            short_title: White Sox @ Yankees
-            url: http://seatgeek.com/chicago-white-sox-at-new-york-yankees-tickets/mlb/2011-04-25/500601/?aid=1
-            lowest_price: 7
-            average_price: 38
-            highest_price: 13118
-            venue_name: Yankee Stadium
-            venue_address: One East 161st St.
-            venue_location: Bronx, NY
-            latitude: 40.8269988364
-            longitude: -73.9277368784
-            datetime: Monday April 25, 2011 at 7:05 pm
-            date: April 25 2011
-            time: 7:05 pm
-            timestamp: 1303758300
-            type: mlb
-            tv_channels: null
-            created_at: 2010-11-30 21:07:07
-            updated_at: 2011-04-13 15:53:26
+            id: 500601,
+            title: "Chicago White Sox at New York Yankees",
+            short_title: "White Sox @ Yankees",
+            url: "http://seatgeek.com/chicago-white-sox-at-new-york-yankees-tickets/mlb/2011-04-25/500601/?aid=1",
+            lowest_price: 7,
+            average_price: 38,
+            highest_price: 13118,
+            venue_id: 8,
+            venue_name: "Yankee Stadium",
+            venue_address: "One East 161st St.",
+            venue_location: "Bronx, NY",
+            latitude: 40.8269988364,
+            longitude: -73.9277368784,
+            datetime: "Monday April 25, 2011 at 7:05 pm",
+            date: "April 25 2011",
+            time: "7:05 pm",
+            timestamp: 1303758300,
+            type: "mlb",
+            tv_channels: null,
+            created_at: "2010-11-30 21:07:07",
+            updated_at: "2011-04-13 15:53:26",
         }
     ]
 }</code></pre>
