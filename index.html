@@ -1,350 +1,1092 @@
----
-layout: default
-title: Home
----
+<html>
 
-<div id="welcome">
-  <h1 class="first">Welcome to the SeatGeek Developer site</h1>
-  <p>This site contains documentation on the API methods and accompanying javascript you can use to make use of SeatGeek in your application.</p>
-</div>
+<head>
+    <title>SeatGeek Platform API Documentation</title>
+    <style>
+    /*--------------------- Layout and Typography ----------------------------*/
+    body {
+      font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, FreeSerif, serif;
+      font-size: 15px;
+      line-height: 22px;
+      color: #252519;
+      margin: 0; padding: 0;
+    }
+    a {
+      color: #261a3b;
+    }
+      a:visited {
+        color: #261a3b;
+      }
+    p {
+      margin: 0 0 15px 0;
+      font-size: 15px;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin: 0px 0 15px 0;
+    }
+    h1 {
+      margin-top: 40px;
+      font-size: 32px;
+    }
+    h2 {
+      font-size: 29px;
+    }
+    h3 {
+      font-size: 19px;
+    }
+    h4 {
+      font-size: 16px;
+    }
+    .code h4 {
+      text-shadow: 0 1px 0 rgba(255,255,255,.9);
+    }
+    #container {
+      position: relative;
+    }
+    #background {
+      position: fixed;
+      top: 0; left: 525px; right: 0; bottom: 0;
+      background: #f3f6ff;
+      border-left: 1px solid #e5e5ee;
+      z-index: -1;
+    }
+    dd, dt {
+      font-size: 15px;
+    }
+    table td {
+      border: 0;
+      outline: 0;
+    }
+    td.docs, th.docs {
+      max-width: 450px;
+      min-width: 450px;
+      min-height: 5px;
+      padding: 20px 25px 1px 50px;
+      overflow-x: hidden;
+      vertical-align: top;
+      text-align: left;
+    }
+    tr.new-section td.docs, tr.new-section th.docs {
+      padding-top: 56px;
+    }
+    .docs pre {
+      margin: 15px 0 15px;
+      padding-left: 15px;
+    }
+    .docs p tt, .docs p code, .docs dd code {
+      background-color: #f3f3f3;
+      border: 1px solid #e6e6e6;
+      border-radius: 3px 3px 3px 3px;
+      margin: 0 2px;
+      padding: 0 5px;
+      white-space: nowrap;
+    }
+    .docs .note {
+      background-color: #fff6db;
+      border-radius: 6px;
+      padding: 13px 18px;
+      border: 1px solid #f0dc9f;
+      margin: 19px 0 24px;
+      text-shadow: 0 1px 0 rgba(255,255,255,.6);
+    }
+    td.code, th.code {
+      padding: 24px 15px 16px 25px;
+      width: 100%;
+      vertical-align: top;
+      background: #f3f6ff;
+      border-left: 1px solid #e5e5ee;
+    }
+    tr.new-section td.code, tr.new-section th.code {
+      padding-top: 60px;
+    }
+    pre, tt, code {
+      font-size: 12px; line-height: 18px;
+      font-family: Menlo, Monaco, Consolas, "Lucida Console", monospace;
+      margin: 0; padding: 0;
+    }
+    ::selection {
+    	background: #f15c5c; /* Safari */
+    	color: #fff;
+    	text-shadow: 0 1px 0 rgba(0,0,0,.05);
+    	}
+    ::-moz-selection {
+    	background: #f15c5c; /* Firefox */
+    	color: #fff;
+    	text-shadow: 0 1px 0 rgba(0,0,0,.05);
+    }
+  </style>
+</head>
+<link rel="icon" type="image/ico" href="http://seatgeek.com/favicon.ico">
+<body>
 
-<div id="api-methods">
-  <h2>Available API methods</h2>
-  <p>Here's an index of the API methods you can use to access events and associated data using the SeatGeek API.</p>
-  <ul>
-    <li><a href="#api__events__in_your_area">Events in your area</a></li>
-    <li><a href="#api__events__upcoming_for_teamband">Events upcoming for team/band<a></li>
-    <li><a href="#api__events__upcoming_for_category">Events upcoming for a category</a></li>
-  </ul>
-  <p>The general url scheme for api calls is <code>/:version/:namespace/:method.:format</code>. Arguments are specified in the querystring. The two supported formats are xml and json.</p>
-</div>
+<div id="container">
+    <div id="background"></div>
 
-<div id="api__events__in_your_area">
-  <h3>Events in your area</h3>
+    <table cellpadding="0" cellspacing="0">
+      <thead>
+        <tr>
+          <th class="docs" style="padding-top: 0;">
+            <h1>The SeatGeek Platform</h1>
+            <h2 style="margin-bottom: 0;position: relative;top: -14px; font-size: 15px;text-transform: uppercase;">API Documentation</h2>
+          </th>
 
-  <pre><code>http://api.seatgeek.com/1/events/in_your_area.json</code></pre>
+          <th class="code" style="background: inherit;"></th>
+        </tr>
+      </thead>
 
-  <p>Returns events near a user. Locate a user by geolocating their IP (first example &ndash; useful for widgets and other code running in the browser), a zipcode, by specifying an IP to geolocate, or by passing their latitude and longitude directly.</p>
+      <tbody>
 
-  <h4>Options</h4>
-  <p>The following are all valid options to this api request:</p>
+        <tr>
+          <td class="docs" style="padding-top: 15px;">
+            <p>SeatGeek maintains a canonical directory of live events in the United States. We created the SeatGeek Platform to enable others to build on top of that data. The SeatGeek Platform makes it easy to construct applications that help users find and discover events by exposing the wealth of data and powerful search behind SeatGeek.com in an easy-to-consume format.</p>
+          </td>
+          <td class="code" style="padding-top: 15px;"></td>
+        </tr>
 
-  <ul>
-    <li><strong>zipcode</strong>: US Zip Code. If no location is set, or we are unable to geolocate users, the location will set to the default zip code.
-      <ul>
-        <li>Default: 10038</li>
-        <li>Type: 5-digit US Zip Code</li>
-        <li>Example:
-          <pre><code>http://api.seatgeek.com/1/events/in_your_area.json?zipcode=90210</code></pre>
-        </li>
-      </ul>
-    </li>
+        <tr>
+          <td class="docs" style="padding-top: 15px;">
+            <h2>Overview</h2>
+            <p>The Platform's API follows RESTful principles as closely as possible while allowing for flexible queries.</p>
+            <p>All responses can be served in JSON, JSONP or XML. Authentication is not required for any endpoints at this time. The API makes extensive use of query strings to retrieve resources based around various search criteria.</p>
 
-    <li><strong>latitude|longitude</strong>: Latitude and Longitude coordinates. Both must be specified, otherwise they are ignored
-      <ul>
-        <li>Default: None</li>
-        <li>Type: Floating Point numbers, such as 40.7141</li>
-        <li>Example:
-          <pre><code>http://api.seatgeek.com/1/events/in_your_area.json?latitude=40.7141&amp;longitude=-74.0063</code></pre>
-        </li>
-      </ul>
-    </li>
+            <p>All arguments, unless specifically noted, can be used together to create complex queries</p>
 
-    <li><strong>ip</strong>: A specific IP address to Geolocate. Note that this may sometimes give incorrect event listings, and therefore a zipcode or coordinates are preferred.
-      <ul>
-        <li>Default: Requesting IP Address</li>
-        <li>Type: IPv4-style IP Address</li>
-        <li>Example:
-          <pre><code>http://api.seatgeek.com/1/events/in_your_area.json?ip=50.16.199.107</code></pre>
-        </li>
-      </ul>
-    </li>
+            <h4>Table of Contents</h4>
 
-    <li><strong>category</strong>: All unsupported categories will result in a 404 response.
-      <ul>
-        <li>Default: 'all'</li>
-        <li>Type: String</li>
-        <li>Options:
-<pre><code># all, sports, major_sports, ncaa_sports, concerts,
-# mlb, nba, nfl, nhl, mls,
-# ncaa_basketball, ncaa_football, ncaa_baseball, ncaa_hockey, ncaa_soccer,
-# nascar,
-# tennis,
-# golf, pga, lpga,
-# theater
-</code></pre>
-        </li>
-        <li>Example:
-          <pre><code>http://api.seatgeek.com/1/events/in_your_area.json?category=mlb</code></pre>
-        </li>
-      </ul>
-    </li>
+            <ul id="toc">
+                <li><a href="#responses">Responses</a></li>
+                <li><a href="#events">Events</a></li>
+                <li><a href="#performers">Performers</a></li>
+                <li><a href="#venues">Venues</a></li>
+                <li><a href="#taxonomies">Taxonomies</a></li>
+                <li><a href="#support">Support</a></li>
+                <li><a href="http://seatgeek.com/api-terms" target="_blank">Terms of Use</a></li>
+            </ul>
+          </td>
 
-    <li><strong>range</strong>: Range for geolocated events. Unit is in miles.
-      <ul>
-        <li>Default: 45</li>
-        <li>Type: Integer</li>
-        <li>Example:
-          <pre><code>http://api.seatgeek.com/1/events/in_your_area.json?range=5</code></pre>
-        </li>
-      </ul>
-    </li>
+          <td class="code" style="padding-top: 15px;">
+            <h3>API Endpoint</h3>
+            <p><code>http://api.seatgeek.com/2</code></p>
 
-    <li><strong>order</strong>: Field to order by
-      <ul>
-        <li>Default: score</li>
-        <li>Options:
-<pre><code># score
-# date</code></pre>
-        </li>
-        <li>Type: String</li>
-        <li>Example:
-          <pre><code>http://api.seatgeek.com/1/events/in_your_area.json?order=date</code></pre>
-        </li>
-      </ul>
-    </li>
+            <h3>Resource Endpoints</h3>
+            <pre>
+/events
+/events/{EVENT_ID}
+/performers
+/performers/{PERFORMER_ID}
+/venues
+/venues/{VENUE_ID}
+            </pre>
+          </td>
+        </tr>
 
-    <li><strong>limit</strong>: Number of events to retrieve.
-      <ul>
-        <li>Default: 3</li>
-        <li>Min: 1</li>
-        <li>Max: 100</li>
-        <li>Type: Integer</li>
-        <li>Example:
-          <pre><code>http://api.seatgeek.com/1/events/in_your_area.json?limit=10</code></pre>
-        </li>
-      </ul>
-    </li>
+      <!-- Initial Information -->
+      <tr id="responses">
+        <td class="docs" style="padding-top: 0;">
+          <h2>Responses</h2>
+          <p>The API provides two basic types of response documents: (i) a single resource response document and (ii) a bulk resource response document. The former returns a single document of the requested resource. This type of document is <strong>only</strong> returned when attempting to access a document with a <code>http://api.seatgeek.com/2/events/{EVENT_ID}</code> style request.</p>
 
-    <li><strong>aid</strong>: Affiliate id for the api request
-      <ul>
-        <li>Default: None</li>
-        <li>Type: Integer</li>
-        <li>Example:
-          <pre><code>http://api.seatgeek.com/1/events/in_your_area.json?aid=478</code></pre>
-        </li>
-      </ul>
-    </li>
-  </ul>
-</div>
+          <p>A bulk resource response document will include an array of single resource documents along with some additional meta information about the response. If no resources are found, meta information will be returned with an empty resources array.</p>
+        </td>
+      </tr>
 
-<div id="api__events__upcoming_for_teamband">
-  <h3>Events upcoming for team/band</h3>
-  <pre><code>http://api.seatgeek.com/1/events/upcoming_for_teamband.json?slug=carolina-panthers</code></pre>
+      <tr>
+        <td class="docs">
+          <h3>Document Formats</h3>
 
-  <p>Returns upcoming events for a team/band. Specify a team/band by <code>id</code> or <code>slug</code> (the url-friendly names you'll find in urls like <a href="http://seatgeek.com/new-york-yankees-tickets/">http://seatgeek.com/new-york-yankees-tickets/</a>)</p>
+          <dl>
+            <dt><code>format:</code> <strong>optional,</strong> default is <code>json</code></dt>
+            <dd><p>Acceptable arguments are <code>json</code> and <code>xml</code></p></dd>
+            <dt><code>callback:</code> <strong>optional,</strong> default is null</dt>
+            <dd><p>If a callback is provided, the response will be forced to be <code>json</code>, and your response document will be wrapped with your callback argument.</p></dd>
+          </dl>
+        </td>
 
-  <h4>Options</h4>
-  <p>The following are all valid options to this api request:</p>
+        <td class="code">
+          <div class="example-request">
+            <h4>Example Request</h4>
+            <p><code>$ curl 'http://api.seatgeek.com/2/events/739515?callback=fireEvent'</code></p>
+          </div>
+          <div class="example-response">
+            <h4>Example Response</h4>
+            <pre><code>fireEvent({
+    "stats": {...},
+    "title": "Houston Rodeo Livestock Show and Rodeo (Zac Brown Band Performance)",
+    "url": "/houston-rodeo-livestock-show-and-rodeo-zac-brown-band-performance-tickets/sports/2012-03-12/739515/",
+    "datetime_local": "2012-03-12T18:45:00",
+    "performers": [...],
+    "venue": {...},
+    "short_title": "Houston Rodeo Livestock Show and Rodeo (Zac Brown Band Performance)",
+    "datetime_utc": "2012-03-12T23:45:00",
+    "score": 267.608,
+    "taxonomies": [...],
+    "type": "sports",
+    "id": 739515
+})
 
-  <ul>
-    <li><strong>id</strong>: SeatGeek Team or Band ID. If querying for sports teams, you can also specify multiple teams by separating them via a <code>^</code> character
-      <ul>
-        <li>Default: None</li>
-        <li>Type: Integer</li>
-        <li>Example:
-<pre><code>http://api.seatgeek.com/1/events/upcoming_for_teamband.json?id=8
-http://api.seatgeek.com/1/events/upcoming_for_teamband.json?id=8^2</code></pre>
-        </li>
-      </ul>
-    </li>
+</pre></code>
+          </div>
 
-    <li><strong>slug</strong>: SeatGeek Team or Band slug. If querying for sports teams, you can also specify multiple teams by separating them via a <code>^</code> character.
-      <ul>
-        <li>Default: None</li>
-        <li>Type: String</li>
-        <li>Example:
-<pre><code>http://api.seatgeek.com/1/events/upcoming_for_teamband.json?slug=new-york-yankees
-http://api.seatgeek.com/1/events/upcoming_for_teamband.json?slug=new-york-yankees^atlanta-braves</code></pre>
-        </li>
-      </ul>
-    </li>
+          <div class="example-request">
+            <h4>Example Request</h4>
+            <p><code>$ curl 'http://api.seatgeek.com/2/events/739515?format=xml'</code></p>
+          </div>
+          <div class="example-response">
+            <h4>Example Response</h4>
+            <pre><code>&lt;event&gt;
+  &lt;stats&gt;
+     ...
+  &lt;/stats&gt;
+  &lt;title&gt;
+      Houston Rodeo Livestock Show and Rodeo (Zac Brown Band Performance)
+  &lt;/title&gt;
+  &lt;url&gt;
+      /houston-rodeo-livestock-show-and-rodeo-zac-brown-band-performance-tickets/sports/2012-03-12/739515/
+  &lt;/url&gt;
+  &lt;datetime_local&gt;2012-03-12T18:45:00&lt;/datetime_local&gt;
+  &lt;performers&gt;
+      &lt;performer&gt;
+         ...
+      &lt;/performer&gt;
+  &lt;/performers&gt;
+  &lt;venue&gt;
+    ...
+  &lt;/venue&gt;
+  &lt;short_title&gt;
+      Houston Rodeo Livestock Show and Rodeo (Zac Brown Band Performance)
+  &lt;/short_title&gt;
+  &lt;datetime_utc&gt;2012-03-12T23:45:00&lt;/datetime_utc&gt;
+  &lt;score&gt;267.608&lt;/score&gt;
+  &lt;taxonomies&gt;
+    ...
+  &lt;/taxonomies&gt;
+  &lt;type&gt;sports&lt;/type&gt;
+  &lt;id&gt;739515&lt;/id&gt;
+&lt;/event&gt;
+</pre></code>
+          </div>
 
-    <!-- <li><strong>myspace_slug</strong>: A Myspace slug that maps to one of our Bands.
-      <ul>
-        <li>Default: None</li>
-        <li>Type: String</li>
-        <li>Example:
-          <pre><code>http://api.seatgeek.com/1/events/upcoming_for_teamband.json?myspace_slug=10years</code></pre>
-        </li>
-      </ul>
-    </li> -->
+        </td>
+      </tr>
 
-    <li><strong>location</strong>: For sports events, specifies whether the events should be all games or just home games.
-      <ul>
-        <li>Default: If querying for multiple teams, all, otherwise home.</li>
-        <li>Options:
-<pre><code># all
-# home</code></pre>
-        </li>
-        <li>Type: String</li>
-        <li>Example:
-          <pre><code>http://api.seatgeek.com/1/events/upcoming_for_teamband.json?location=all</code></pre>
-        </li>
-      </ul>
-    </li>
+      <tr>
+        <td class="docs">
+          <h3>Meta</h3>
+          <p>Each bulk response is appended with meta information</p>
 
-    <li><strong>days_out</strong>: Number of days away returned events should be.
-      <ul>
-        <li>Default: 6</li>
-        <li>Type: Integer</li>
-        <li>Example:
-          <pre><code>http://api.seatgeek.com/1/events/upcoming_for_teamband.json?zipcode=90210</code></pre>
-        </li>
-      </ul>
-    </li>
-
-    <li><strong>limit</strong>: Number of events to retrieve.
-      <ul>
-        <li>Default: 5</li>
-        <li>Min: 1</li>
-        <li>Max: 100</li>
-        <li>Type: Integer</li>
-        <li>Example:
-          <pre><code>http://api.seatgeek.com/1/events/upcoming_for_teamband.json?limit=10</code></pre>
-        </li>
-      </ul>
-    </li>
-
-    <li><strong>aid</strong>: Affiliate id for the api request
-      <ul>
-        <li>Default: None</li>
-        <li>Type: Integer</li>
-        <li>Example:
-          <pre><code>http://api.seatgeek.com/1/events/upcoming_for_teamband.json?aid=478</code></pre>
-        </li>
-      </ul>
-    </li>
-  </ul>
-</div>
-
-<div id="api__events__upcoming_for_category">
-  <h3>Events upcoming for a category</h3>
-  <pre><code>http://api.seatgeek.com/1/events/upcoming_for_category.json?category=mlb&amp;limit=5&amp;offset=10</code></pre>
-
-  <p>Returns upcoming events for a particular category.</p>
-
-  <h4>Options</h4>
-  <p>The following are all valid options to this api request:</p>
-
-  <ul>
-    <li><strong>category</strong>: All unsupported categories will result in a 404 response.
-      <ul>
-        <li>Default: None</li>
-        <li>Type: String</li>
-        <li>Required: Yes</li>
-        <li>Options:
-<pre><code># sports,
-# baseball, mlb, ncaa_baseball, minor_league_baseball,
-# football, nfl, ncaa_football,
-# basketball, nba, ncaa_basketball, ncaa_womens_basketball, wnba, nba_dleague,
-# hockey, nhl, ncaa_hockey, minor_league_hockey,
-# soccer, mls, ncaa_soccer, european_soccer, international_soccer, world_cup,
-# auto_racing, nascar, nascar_sprintcup, nascar_nationwide, indycar, f1, monster_truck, motocross,
-# golf, pga, lpga,
-# fighting, boxing, mma, wrestling,
-# tennis,
-# concerts, concert, music_festival,
-# theater,
-# classical, classical_opera, classical_vocal, classical_orchestral_instrumental,
-# cirque_du_soleil,
-# broadway_tickets_national,
-# comedy, family, dance_performance_tour
-</code></pre>
-        </li>
-        <li>Example:
-          <pre><code>http://api.seatgeek.com/1/events/upcoming_for_category.json?category=nfl</code></pre>
-        </li>
-      </ul>
-    </li>
-
-    <li><strong>offset</strong>: Number of events to skip. Useful for pagination.
-      <ul>
-        <li>Default: 0</li>
-        <li>Type: Integer</li>
-        <li>Example:
-          <pre><code>http://api.seatgeek.com/1/events/upcoming_for_category.json?category=nfl&amp;offset=10</code></pre>
-        </li>
-      </ul>
-    </li>
-
-    <li><strong>limit</strong>: Number of events to retrieve.
-      <ul>
-        <li>Default: 100</li>
-        <li>Min: 1</li>
-        <li>Max: 100</li>
-        <li>Type: Integer</li>
-        <li>Example:
-          <pre><code>http://api.seatgeek.com/1/events/upcoming_for_category.json?category=nfl&amp;limit=10</code></pre>
-        </li>
-      </ul>
-    </li>
-
-    <li><strong>aid</strong>: Affiliate id for the api request
-      <ul>
-        <li>Default: None</li>
-        <li>Type: Integer</li>
-        <li>Example:
-          <pre><code>http://api.seatgeek.com/1/events/upcoming_for_category.json?category=nfl&amp;aid=478</code></pre>
-        </li>
-      </ul>
-    </li>
-  </ul>
-</div>
-
-<div id="affiliate-info">
-  <h2>Api info for affiliates</h2>
-  <p>All methods support the <code>aid</code> (affiliate id) parameter for convenience. Passing an <code>aid</code> will "affiliatize" all generated urls in the API payload. For example, a request to:</p>
-  <pre><code>http://api.seatgeek.com/1/events/upcoming_for_teamband.json?slug=new-york-yankees&amp;limit=1&amp;aid=1</pre></code>
-  <p>will return a payload like:</p>
-  <pre><code>{
-    name: "New York Yankees",
-    slug: "new-york-yankees",
-    url: "http://seatgeek.com/new-york-yankees-tickets/?aid=1",
-    events: [
-        {
-            id: 500601,
-            title: "Chicago White Sox at New York Yankees",
-            short_title: "White Sox @ Yankees",
-            url: "http://seatgeek.com/chicago-white-sox-at-new-york-yankees-tickets/mlb/2011-04-25/500601/?aid=1",
-            lowest_price: 7,
-            average_price: 38,
-            highest_price: 13118,
-            venue_id: 8,
-            venue_name: "Yankee Stadium",
-            venue_address: "One East 161st St.",
-            venue_location: "Bronx, NY",
-            latitude: 40.8269988364,
-            longitude: -73.9277368784,
-            datetime: "Monday April 25, 2011 at 7:05 pm",
-            date: "April 25 2011",
-            time: "7:05 pm",
-            timestamp: 1303758300,
-            type: "mlb",
-            tv_channels: null,
-            created_at: "2010-11-30 21:07:07",
-            updated_at: "2011-04-13 15:53:26",
-        }
+          <dl>
+            <dt>took:</dt> <dd>Response time in milliseconds</dd>
+            <dt>geolocation:</dt> <dd>Details about the results of geolocation. <code>null</code> if geolocation not requested, or unsuccessful.</dd>
+            <dt>per_page:</dt> <dd>Number of documents per page</dd>
+            <dt>total:</dt> <dd>Total number of matched documents</dd>
+            <dt>page:</dt> <dd>Current paginated page number</dd>
+          </dl>
+        </td>
+        <td class="code">
+          <div class="example-response">
+            <h4>Example Response</h4>
+            <pre><code>{
+    "meta": {
+        "took": 3,
+        "geolocation": null,
+        "per_page": 1,
+        "total": 63236,
+        "page": 1
+    },
+    "events": [
+        {...}
     ]
+}</pre></code>
+          </div>
+        </td>
+      </tr>
+
+      <tr class="new-section">
+        <td class="docs">
+          <h2>API Features</h2>
+          <p>The SeatGeek supports sorting, pagination, and geolocation. Geolocation is only available for resources with a <code>location</code> attribute (in other words, not <code>/performers</code>).</p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="docs">
+          <h3>Geolocation</h3>
+          <p>The API can geolocate requests based on a user's IP address, postal code (currently, only US and Canadian postal codes are supported), or latitude and longitude. In order to geolocate a request, either <code>geoip</code> or both <code>lat</code> and <code>lon</code> must be provided. Details about geolocation will be returned in the <code>meta</code> document.
+          </p>
+          <h4>Arguments</h4>
+          <dl>
+            <dt><code>geoip:</code> <strong>optional</strong>, default is false</dt>
+            <dd>Accepts one of: a valid IP address (useful when making a request server-side on behalf of a client); a valid US or Canadian postal code; or <code>true</code>, to attempt to geolocate by the requesting client's IP (useful when calling directly from a browser).</dd>
+            <dt><code>lat:</code> <strong>optional</strong>, <code>lon</code> is required if used</dt>
+            <dd>Latitude in decimal degrees.</dd>
+            <dt><code>lon:</code> <strong>optional</strong>, <code>lat</code> is required if used</dt>
+            <dd>Longitude in decimal degrees.</dd>
+            <dt><code>range:</code> <strong>optional</strong>, default is 30mi</dt>
+            <dd>The number of miles (or kilometers, with <code>km</code>) to search around the location</dd>
+          </dl>
+        </td>
+
+        <td class="code">
+          <div class="definition">
+            <h4>Definition</h4>
+            <p><code>GET http://api.seatgeek.com/2/events?geoip=true</code></p>
+          </div>
+
+          <div class="example-request">
+            <h4>Example Request</h4>
+            <p><code>$ curl 'http://api.seatgeek.com/2/events?geoip=98.213.245.205&amp;range=12mi'</code></p>
+          </div>
+          <div class="example-response">
+            <h4>Example Response</h4>
+            <pre><code>{
+    "meta": {
+        "geolocation": {
+            "lat": 42.2711,
+            "lon": -89.0593,
+            "range": "12mi"
+        },
+        "took": 5,
+        "per_page": 10,
+        "total": 13320,
+        "page": 1
+    },
+    "events": [
+        {...}
+    ]
+}</pre></code>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="docs">
+          <h3>Pagination</h3>
+          <p>The SeatGeek Platform API has built in pagination support.</p>
+          <h4>Arguments</h4>
+          <dl>
+            <dt><code>per_page:</code> <strong>optional</strong>, default is 10</dt>
+            <dd>Number of resource documents to return per "page"</dd>
+            <dt><code>page:</code> <strong>optional</strong>, default is 1</dt>
+            <dd>Page number, 1-indexed</dd>
+          </dl>
+        </td>
+
+        <td class="code">
+          <div class="definition">
+            <h4>Definition</h4>
+            <p><code>GET http://api.seatgeek.com/2/venues?per_page=25&amp;page=3</code></p>
+          </div>
+
+          <div class="example-request">
+            <h4>Example Request</h4>
+            <p><code>$ curl 'http://api.seatgeek.com/2/venues?per_page=25&amp;page=3'</code></p>
+          </div>
+          <div class="example-response">
+            <h4>Example Response</h4>
+            <pre><code>{
+    "meta": {
+        "took": 5,
+        "geolocation": null,
+        "per_page": 25,
+        "total": 13320,
+        "page": 3
+    },
+    "venues": [
+        {...}
+    ]
+}</pre></code>
+          </div>
+        </td>
+
+      </tr>
+
+      <tr>
+        <td class="docs">
+          <h3>Sorting</h3>
+          <p>The SeatGeek Platform API has basic support for sorting the response result set.</p>
+          <h4>Arguments</h4>
+          <dl>
+            <dt><code>sort:</code> <strong>optional</strong>, defaults vary by resource</dt>
+            <dd><p>
+              By default events are sorted by <code>sort=datetime_utc.asc</code>, venues and performers are sorted by <code>sort=score.desc</code>.<br/>
+              This argument takes two parameters, the field which to sort by and the direction of the sort separated with a <code>.</code>(period character). Valid sort directions are <code>asc</code> and <code>desc</code>. Valid fields are <code>datetime_local</code>, <code>datetime_utc</code>, and <code>score</code></p>
+            </dd>
+          </dl>
+        </td>
+
+        <td class="code">
+          <div class="definition">
+            <h4>Definition</h4>
+            <p><code>GET http://api.seatgeek.com/2/events?sort=score.desc</code></p>
+          </div>
+
+          <div class="example-request">
+            <h4>Example Request</h4>
+            <p><code>$ curl 'http://api.seatgeek.com/2/events?sort=score.desc'</code></p>
+          </div>
+        </td>
+
+      </tr>
+
+      <tr>
+        <td class="docs">
+          <h3>Affiliates</h3>
+          <p>The SeatGeek Platform API has built&ndash;in support for affiliates.</p>
+          <h4>Arguments</h4>
+          <dl>
+              <dt><code>aid:</code> <strong>optional</strong>, default is null</dt>
+              <dd><p>Adding the <code>aid</code> argument will append an <code>aid</code> to all URLs</p></dd>
+              <dt><code>rid:</code> <strong>optional</strong>, default is null</dt>
+              <dd><p>Adding the <code>rid</code> argument will append an <code>rid</code> to all URLs</p></dd>
+          </dl>
+        </td>
+
+        <td class="code">
+          <div class="definition">
+            <h4>Definition</h4>
+            <p><code>GET http://api.seatgeek.com/2/events?aid=123</code></p>
+          </div>
+
+          <div class="example-request">
+            <h4>Example Request</h4>
+            <p><code>$ curl 'http://api.seatgeek.com/2/events?aid=123'</code></p>
+            <p><code>$ curl 'http://api.seatgeek.com/2/events?rid=321'</code></p>
+            <p><code>$ curl 'http://api.seatgeek.com/2/events?aid=12332&amp;rid=123'</code></p>
+          </div>
+        </td>
+
+      </tr>
+
+      <!-- Events -->
+
+      <tr class="new-section" id="events">
+        <td class="docs">
+          <h2>Events</h2>
+          <p>To find an events matching specific search criteria you must send a request to the <code>/events</code> endpoint. Sending a request to <code>/events</code> will return a paginated list of all events.</p>
+          <p>All arguments can be used with each other with the exception of the <code>id</code> argument. <code>id</code> can only be used with the API-wide arguments such as pagination and sorting.</p>
+
+          <h3>Getting an event by id</h3>
+          <p>To get a single event document, simply add the ID of the event to the URL</p>
+
+          <h4>The Events Response Document</h4>
+          <dl>
+            <dt>stats:</dt> <dd>Summary information about currently available ticket listings for the event</dd>
+            <dt>title:</dt> <dd>The title of the event</dd>
+            <dt>url:</dt> <dd>URL of the event on seatgeek.com &ndash; you should direct users here to search for tickets</dd>
+            <dt>datetime_local:</dt> <dd>Date/time of the event in the local timezone of the venue &ndash; you will generally want to display this to users</dd>
+            <dt>datetime_utc:</dt> <dd>Date and time of the event in UTC</dd>
+            <dt>performers:</dt> <dd>An list of performers &ndash; <code>primary</code>, <code>home_team</code>, <code>away_team</code> fields indicate the performer's role at the event</dd>
+            <dt>venue:</dt> <dd>A venue response document</dd>
+            <dt>short_title:</dt> <dd>A shortened title for the event</dd>
+            <dt>score:</dt> <dd>A numerical representation of popularity based on ticket sales</dd>
+            <dt>taxonomies:</dt> <dd>An array of taxonomies referencing the event</dd>
+            <dt>type:</dt> <dd>Type of event</dd>
+            <dt>id:</dt> <dd>A unique integer identifier for the event</dd>
+          </dl>
+        </td>
+
+        <td class="code">
+          <div class="definition">
+            <h4>Definition</h4>
+            <p><code>GET http://api.seatgeek.com/2/events/801255</code></p>
+          </div>
+
+          <div class="example-request">
+            <h4>Example Request</h4>
+            <p><code>$ curl 'http://api.seatgeek.com/2/events/801255'</code></p>
+          </div>
+
+          <div class="example-response" id="event-response-document">
+            <h4>Example Response Document</h4>
+            <pre><code>{
+    "stats": {
+        "listing_count": 161,
+        "average_price": 97,
+        "lowest_price": 62,
+        "highest_price": 296
+    },
+    "title": "Young The Giant with Grouplove",
+    "url": "http://seatgeek.com/young-the-giant-with-grouplove-tickets/new-york-new-york-terminal-5-2012-03-09/concert/721901/",
+    "datetime_local": "2012-03-09T19:00:00",
+    "performers": [
+        {
+            "name": "Young The Giant",
+            "short_name": "Young The Giant",
+            "url": "http://seatgeek.com/young-the-giant-tickets/",
+            "image": "http://cdn.seatgeek.com/images/bandshuge/band_8741.jpg",
+            "primary": true,
+            "id": 8741,
+            "score": 6404,
+            "type": "band",
+            "slug": "young-the-giant"
+        },
+        {
+            "name": "Grouplove",
+            "short_name": "Grouplove",
+            "url": "http://seatgeek.com/grouplove-tickets/",
+            "image": null,
+            "id": 8987,
+            "score": 4486,
+            "type": "band",
+            "slug": "grouplove"
+        }
+    ],
+    "venue": {
+        "city": "New York",
+        "name": "Terminal 5",
+        "extended_address": null,
+        "url": "http://seatgeek.com/terminal-5-tickets/",
+        "country": "US",
+        "state": "NY",
+        "score": 149.259,
+        "postal_code": "10019",
+        "location": {
+            "lat": 40.77167,
+            "lon": -73.99277
+        },
+        "address": null,
+        "id": 814
+    },
+    "short_title": "Young The Giant with Grouplove",
+    "datetime_utc": "2012-03-10T00:00:00",
+    "score": 116.977,
+    "taxonomies": [
+        {
+            "parent_id": null,
+            "id": 2000000,
+            "name": "concert"
+        }
+    ],
+    "type": "concert",
+    "id": 721901
+}
 }</code></pre>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="docs">
+          <h3>performers Argument</h3>
+          <p>The <code>performers</code> argument is used to scope the result set to specific performers. The <code>performers</code> argument may be used several times in the same query.</p>
+          <p>There are currently two fields available to specify how to look up performers. These are <code>id</code> and <code>slug</code>. These fields can be used interchangeably in the same query. See examples.</p>
+          <dl>
+            <dt><code>performers.{FIELD}:</code> <strong>optional</strong>, default is null</dt>
+            <dd>
+              <p>The simplest query to the performers argument looks like this: <code>/events?performers.slug=new-york-mets</code>. This will return all events where the New York Mets are participating.</p>
+            </dd>
+            <dt><code>performers[{SPECIFICITY}].{FIELD}:</code> <strong>optional</strong>, default is '<code>any</code>' if the <code>performers</code> argument is present</dt>
+            <dd>
+              <p>Specificity can be any of the following: <code>home_team</code>, <code>away_team</code>, <code>primary</code>, or <code>any</code></p>
+              <p><code>Primary</code> could be useful when searching concerts for a headlining performer.</p>
+            </dd>
+          </dl>
+        </td>
+
+        <td class="code">
+          <div class="example-request">
+            <h4>Example Requests</h4>
+            <p>New York Mets Games<br/><code>$ curl 'http://api.seatgeek.com/2/events?performers.slug=new-york-mets'</code></p>
+            <p>Mets vs. Yankees Games<br/><code>$ curl 'http://api.seatgeek.com/2/events?performers.slug=new-york-mets&amp;performers=new-york-yankees'</code></p>
+            <p>Yankees at. Mets Games<br/><code>$ curl 'http://api.seatgeek.com/2/events?performers[home_team].id=3&amp;performers.id=8'</code></p>
+            <p>Mets vs. Yankees Games (mixed fields)<br/><code>$ curl 'http://api.seatgeek.com/2/events?performers.id=3&amp;performers.slug=new-york-yankees'</code></p>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="docs">
+          <h3>datetime Argument</h3>
+          <p>The <code>datetime</code> argument is used to scope the result set to events occurring within a certain date and time range. The <code>datetime</code> argument may be used zero, one, or two times in a query. You can scope the date to a range using operators.</p>
+          <p>There are two distinct <code>datetime</code> arguments that both offer identical options. You can scope the search to <code>datetime_local</code> or <code>datetime_utc</code>. All of the examples will use <code>datetime_utc</code>, however <code>datetime_local</code> can be replaced in all instances.</p>
+          <p>There are currently two allowed date/time formats. The first is a full ISO 8601 string (YYYY-MM-DDTHH:MM:SS), the other is a simple date string of the format of YYYY-MM-DD.</p>
+          <dl>
+            <dt><code>datetime_utc:</code> <strong>optional</strong>, default is null</dt>
+            <dd>
+              <p>Accepts only the short date/time string. Returns all the matching events for a given date.</p>
+            </dd>
+            <dt><code>datetime_utc.{OPERATOR}:</code> <strong>optional</strong>, default is null</dt>
+            <dd>
+              <p>Valid operators are <code>gt</code>, <code>gte</code>, <code>lt</code>, and <code>lte</code></p>
+            </dd>
+          </dl>
+        </td>
+
+        <td class="code">
+          <div class="example-request">
+            <h4>Example Requests</h4>
+            <p>Events for June 12, 2012<br/><code>$ curl 'http://api.seatgeek.com/2/events?datetime_utc=2012-06-12'</code></p>
+            <p>Events after Sept 7, 2012<br/><code>$ curl 'http://api.seatgeek.com/2/events?datetime_utc.gt=2012-09-07'</code></p>
+            <p>Events in April 2012<br/><code>$ curl 'http://api.seatgeek.com/2/events?datetime_utc.gte=2012-04-01&amp;datetime_utc.lte=2012-04-30'</code></p>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="docs">
+          <h3>query Argument</h3>
+          <p>The <code>q</code> argument is used to search across all possible parts of a response document.</p>
+          <dl>
+            <dt><code>q:</code> <strong>optional</strong>, default is null</dt>
+            <dd>
+              <p>This is a very broad search, and will possibly return unexpected results. For example, a query for 'madison', will return all events at any venue in Madison, WI, venues with Madison in their name (Madison Square Garden), and any performer with 'Madison' in their title.</p>
+
+              <p>The <code>q</code> argument also allows for some natural language queries such as <code>yankees march</code>, or <code>skrillex on june 4th</code></p>
+            </dd>
+          </dl>
+        </td>
+
+        <td class="code">
+          <div class="example-request">
+            <h4>Example Requests</h4>
+            <p>Matches 'boston celtics'<br/><code>$ curl 'http://api.seatgeek.com/2/events?q=boston+celtics'</code>
+            </p>
+            <p>Matches 'Coachella'<br/><code>$ curl 'http://api.seatgeek.com/2/events?q=coachella'</code></p>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="docs">
+          <h3>id Argument</h3>
+          <p>The <code>id</code> argument is used to match events with specified unique ids. It can be used multiple times in the same request.</p>
+          <p class="note"><strong>Note</strong>: Using this argument will override all other query arguments.</p>
+          <dl>
+            <dt><code>id:</code> <strong>optional</strong>, default is null</dt>
+            <dd>
+              <p>This argument has two purposes. You can use it to force a single response document into the bulk response document. Alternatively you can use it to bulk retrieve events with known unique ids.</p>
+
+              <p>This argument also has an alternate syntax. You can pass a comma separated list of unique ids.</p>
+            </dd>
+          </dl>
+        </td>
+
+        <td class="code">
+          <div class="example-request">
+            <h4>Example Requests</h4>
+            <p>Bulk Document Response for 785673<br/><code>$ curl 'http://api.seatgeek.com/2/events?id=785673'</code></p>
+            <p>Events 785673, 771261, and 760304<br/><code>$ curl 'http://api.seatgeek.com/2/events?id=760304&amp;id=771261&amp;id=785673'</code></p>
+            <p>Alternate of above<br/><code>$ curl 'http://api.seatgeek.com/2/events?id=760304,771261,785673'</code></p>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="docs">
+          <h3>taxonomies Argument</h3>
+          <p>The <code>taxonomies</code> argument is used to scope the result set to events matching a specific type. You can find the list of currently available taxonomies at the <code><a href="#taxonomies">taxonomies</a></code> endpoint.</p>
+          <dl>
+            <dt><code>taxononmies.{FIELD}:</code> <strong>optional</strong>, default is null</dt>
+            <dd>
+              <p>{FIELD} can be <code>name</code>, <code>id</code>, and <code>parent_id</code></p>
+              <p>Accepts one of several <code>type</code>s.</p>
+            </dd>
+          </dl>
+
+        </td>
+
+        <td class="code">
+          <div class="example-request">
+            <h4>Example Requests</h4>
+            <p>Sporting Events<br/><code>$ curl 'http://api.seatgeek.com/2/events?taxonomies.name=sports'</code></p>
+            <p>Monster Truck Events<br/><code>$ curl 'http://api.seatgeek.com/2/events?taxonomies.name=monster_truck'</code></p>
+            <p>Monster Truck Events (by taxonomy id)<br/>
+              <code>$ curl 'http://api.seatgeek.com/2/events?taxonomy.id=1060400'</code></p>
+            <p>
+          </div>
+        </td>
+      </tr>
+
+      <!-- Performers -->
+      <tr class="new-section"  id="performers">
+        <td class="docs">
+          <h2>Performers</h2>
+          <p>To find a performer matching your search criteria you will send a request to the <code>/performers</code> endpoint. Sending a request to <code>/performers</code> will return a paginated list of all performers.</p>
+          <p>All arguments can be used with each other with the exception of the <code>id</code> argument. <code>id</code> can only be used with API-wide arguments, such as those for pagination and sorting.</p>
+
+          <h3>Getting a performer by id</h3>
+          <p>To get a single performer document, simply add the ID of the performer to the URL.</p>
+
+          <h4>The Performers Response Document</h4>
+          <dl>
+            <dt>name:</dt> <dd>Name of the performer</dd>
+            <dt>short_name:</dt> <dd>A short name for the performer</dd>
+            <dt>url:</dt> <dd>URL to the performer</dd>
+            <dt>image:</dt> <dd>URL to an image of the performer</dd>
+            <dt>score:</dt> <dd>A numerical representation of popularity</dd>
+            <dt>slug:</dt> <dd>Short URL-friendly name for the performer</dd>
+            <dt>taxonomies:</dt> <dd>An array of taxonomies referencing the performer</dd>
+            <dt>id:</dt> <dd>Unique identifier of the performer</dd>
+          </dl>
+        </td>
+
+        <td class="code">
+          <div class="definition">
+            <h4>Definition</h4>
+            <p><code>GET http://api.seatgeek.com/2/performers/266</code></p>
+          </div>
+
+          <div class="example-request">
+            <h4>Example Request</h4>
+            <p><code>$ curl 'http://api.seatgeek.com/2/performers/266'</code></p>
+          </div>
+
+          <div class="example-response" id="performer-response-document">
+            <h4>Example Response Document</h4>
+            <pre><code>{
+    "name": "Beastie Boys",
+    "short_name": "Beastie Boys",
+    "url": "http://www.seatgeek.com/beastie-boys-tickets/",
+    "image": "http://cdn.seatgeek.com/images/bandshuge/band_266.jpg",
+    "id": 266,
+    "score": 0,
+    "taxonomies": [
+        {
+            "parent_id": null,
+            "id": 2000000,
+            "name": "concert"
+        }
+    ],
+    "type": "band",
+    "slug": "beastie-boys"
+}</code></pre>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="docs">
+          <h3>slug Argument</h3>
+          <p>The <code>slug</code> argument is used to scope the result to a performer matching a slug.</p>
+          <dl>
+            <dt><code>slug:</code> <strong>optional</strong>, default is null</dt>
+            <dd>
+              <p>A query to the slug argument looks like this: <code>/performers?slug=new-york-mets</code>. This will return a performer document matching the New York Mets</p>
+            </dd>
+            </dd>
+          </dl>
+        </td>
+
+        <td class="code">
+          <div class="example-request">
+            <h4>Example Requests</h4>
+            <p>New York Mets<br/><code>$ curl 'http://api.seatgeek.com/2/performers?slug=new-york-mets'</code></p>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="docs">
+          <h3>query Argument</h3>
+          <p>The <code>q</code> argument is used to search across all possible parts of a response document.</p>
+          <dl>
+            <dt><code>q:</code> <strong>optional</strong>, default is null</dt>
+            <dd>
+              <p>This is a very broad search, and, like events and venues, will possibly return unexpected results.</p>
+            </dd>
+          </dl>
+        </td>
+
+        <td class="code">
+          <div class="example-request">
+            <h4>Example Requests</h4>
+            <p>Matches 'red hot'<br/><code>$ curl 'http://api.seatgeek.com/2/performers?q=red+hot'</code>
+            </p>
+            <p>Matches 'skrillex'<br/><code>$ curl 'http://api.seatgeek.com/2/performers?q=skrillex'</code></p>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="docs">
+          <h3>id Argument</h3>
+          <p>The <code>id</code> argument is used to match performers with specified unique ids. It can be used multiple times in the same request.</p>
+          <p class="note"><strong>Note</strong>: Using this argument will override all other query arguments.</p>
+          <dl>
+            <dt><code>id:</code> <strong>optional</strong>, default is null</dt>
+            <dd>
+              <p>This argument has two purposes. You can use it to force a single response document into the bulk response document. Alternatively, you can use it to bulk retrieve events with known unique ids.</p>
+
+              <p>This argument also has an alternate syntax. You can pass a comma separated list of unique ids.</p>
+            </dd>
+          </dl>
+        </td>
+
+        <td class="code">
+          <div class="example-request">
+            <h4>Example Requests</h4>
+            <p>Bulk Document Response for 1169<br/><code>$ curl 'http://api.seatgeek.com/2/performers?id=1169'</code></p>
+            <p>Venues 2090, 9525, and 6393<br/><code>$ curl 'http://api.seatgeek.com/2/performers?id=2090&amp;id=9525&amp;id=6393'</code></p>
+            <p>Alternate of above<br/><code>$ curl 'http://api.seatgeek.com/2/performers?id=2090,9525,6393'</code></p>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="docs">
+          <h3>taxonomies Argument</h3>
+          <p>The <code>taxonomies</code> argument is used to scope the result set to performers matching a specific type. You can find the list of currently available taxonomies at the <code><a href="#taxonomies">taxonomies</a></code> endpoint.</p>
+          <dl>
+            <dt><code>taxonomies.{FIELD}:</code> <strong>optional</strong>, default is null</dt>
+            <dd>
+              <p>{FIELD} can be <code>name</code>, <code>id</code>, and <code>parent_id</code></p>
+              <p>Accepts one of several <code>type</code>s.</p>
+            </dd>
+          </dl>
+        </td>
+
+        <td class="code">
+          <div class="example-request">
+            <h4>Example Requests</h4>
+            <p>Sporting Events<br/><code>$ curl 'http://api.seatgeek.com/2/performers?taxonomies.name=sports'</code></p>
+            <p>Monster Truck Events<br/><code>$ curl 'http://api.seatgeek.com/2/performers?taxonomies.name=monster_truck'</code></p>
+            <p>Monster Truck Events (by taxonomy id)<br/>
+              <code>$ curl 'http://api.seatgeek.com/2/performers?taxonomy.id=1060400'</code></p>
+            <p>
+          </div>
+        </td>
+      </tr>
+
+
+      <!-- Venues -->
+      <tr class="new-section" id="venues">
+        <td class="docs">
+          <h2>Venues</h2>
+          <p>To find a venue matching your search criteria you will send a request to the <code>/venues</code> endpoint. Sending a request to <code>/venues</code> will return a paginated list of all performers.</p>
+          <p>All arguments can be used with each other, with the exception of the <code>id</code> argument. <code>id</code> can only be used with the API-wide arguments, such as those for pagination and sorting.</p>
+
+          <h3>Getting a venue by id</h3>
+          <p>To get a single venue document, simply add the ID of the performer to the URL</p>
+
+          <h4>The Venue Response Document</h4>
+          <dl>
+            <dt>name:</dt> <dd>Name of the venue</dd>
+            <dt>address:</dt> <dd>City of the venue</dd>
+            <dt>extended_address:</dt> <dd>"Line 2" of the venue's address</dd>
+            <dt>city:</dt> <dd>City of the venue</dd>
+            <dt>postal_code:</dt> <dd>Postal code of the venue</dd>
+            <dt>state:</dt> <dd>State of the venue</dd>
+            <dt>country:</dt> <dd>Country of the venue</dd>
+            <dt>location:</dt> <dd><p>An array of geolocation information for the venue that contains <code>lat</code> and <code>lon</code></p></dd>
+            <dt>url:</dt> <dd>URL to the venue on seatgeek.com</dd>
+            <dt>score:</dt> <dd>A numerical representation of popularity</dd>
+            <dt>id:</dt> <dd>A unique integer identifier of the venue</dd>
+          </dl>
+        </td>
+
+        <td class="code">
+          <div class="definition">
+            <h4>Definition</h4>
+            <p><code>GET http://api.seatgeek.com/2/venues/632</code></p>
+          </div>
+
+          <div class="example-request">
+            <h4>Example Request</h4>
+            <p><code>$ curl 'http://api.seatgeek.com/2/venues/632'</code></p>
+          </div>
+
+          <div class="example-response" id="performer-response-document">
+            <h4>Example Response Document</h4>
+            <pre><code>{
+    "city": "Rockford",
+    "name": "Rockford MetroCentre",
+    "extended_address": null,
+    "url": "http://www.seatgeek.com/rockford-metrocentre-tickets/",
+    "country": "US",
+    "state": "IL",
+    "score": 33.0208,
+    "postal_code": "61101",
+    "location": {
+        "lat": 42.2714,
+        "lon": -89.09612
+    },
+    "address": "300 Elm St.",
+    "id": 632
+}</code></pre>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="docs">
+          <h3>city Argument</h3>
+          <p>The <code>city</code> argument is used to scope the result to a specified city.</p>
+          <dl>
+            <dt><code>city:</code> <strong>optional</strong>, default is null</dt>
+            <dd>
+              <p>A query to the city argument looks like this: <code>/venues?city=rockford</code>. This will return documents for venues located in "Rockford."</p>
+            </dd>
+            </dd>
+          </dl>
+        </td>
+
+        <td class="code">
+          <div class="example-request">
+            <h4>Example Requests</h4>
+            <p>Rockford<br/><code>$ curl 'http://api.seatgeek.com/2/venues?city=rockford'</code></p>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="docs">
+          <h3>state Argument</h3>
+          <p>The <code>state</code> argument is used to scope the result to a specified state.</p>
+          <dl>
+            <dt><code>state:</code> <strong>optional</strong>, default is null</dt>
+            <dd>
+              <p>A query to the state argument looks like this: <code>/venues?state=IL</code>. This will return documents for venues located in Illinois.</p>
+              <p>The two letter state abbreviation should be used for this query.</p>
+            </dd>
+            </dd>
+          </dl>
+        </td>
+
+        <td class="code">
+          <div class="example-request">
+            <h4>Example Requests</h4>
+            <p>Venues in Illinois<br/><code>$ curl 'http://api.seatgeek.com/2/venues?state=il'</code></p>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="docs">
+          <h3>postal_code Argument</h3>
+          <p>The <code>postal_code</code> argument is used to scope the result to a specified postal/zip code.</p>
+          <dl>
+            <dt><code>postal_code:</code> <strong>optional</strong>, default is null</dt>
+            <dd>
+              <p>A query to the postal_code argument looks like this: <code>/venues?postal_code=90210</code>. This will return documents for venues located in 90210.</p>
+            </dd>
+            </dd>
+          </dl>
+        </td>
+
+        <td class="code">
+          <div class="example-request">
+            <h4>Example Requests</h4>
+            <p>Rockford<br/><code>$ curl 'http://api.seatgeek.com/2/venues?postal_code=90210'</code></p>
+          </div>
+        </td>
+      </tr>
+
+
+      <tr>
+        <td class="docs">
+          <h3>query Argument</h3>
+          <p>The <code>q</code> argument is used to search across all possible parts of a response document.</p>
+          <dl>
+            <dt><code>q:</code> <strong>optional</strong>, default is null</dt>
+            <dd>
+              <p>This is a very broad search, and, like events and performers, will possibly return unexpected results.</p>
+            </dd>
+          </dl>
+        </td>
+
+        <td class="code">
+          <div class="example-request">
+            <h4>Example Requests</h4>
+            <p>Matches 'madison'<br/><code>$ curl 'http://api.seatgeek.com/2/venues?q=madison'</code>
+            </p>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="docs">
+          <h3>id Argument</h3>
+          <p>The <code>id</code> argument is used to match venues with specified unique ids. It can be used multiple times in the same request.</p>
+          <p class="note"><strong>Note</strong>: Using this argument will override all of your other query arguments</p>
+          <dl>
+            <dt><code>id:</code> <strong>optional</strong>, default is null</dt>
+            <dd>
+              <p>This argument has two purposes. You can use it to force a single response document into the bulk response document. Alternatively you can use it to bulk retrieve events with known unique ids.</p>
+
+              <p>This argument also has an alternate syntax. You can pass a comma separated list of unique ids.</p>
+            </dd>
+          </dl>
+        </td>
+
+        <td class="code">
+          <div class="example-request">
+            <h4>Example Requests</h4>
+            <p>Bulk Document Response for 1130<br/><code>$ curl 'http://api.seatgeek.com/2/venues?id=1130'</code></p>
+            <p>Venues 1130, 128, and 93<br/><code>$ curl 'http://api.seatgeek.com/2/venues?id=1130&amp;id=128&amp;id=93'</code></p>
+            <p>Alternate of above<br/><code>$ curl 'http://api.seatgeek.com/2/venues?id=1130,128,93'</code></p>
+          </div>
+        </td>
+      </tr>
+
+      <tr class="new-section" id="taxonomies">
+        <td class="docs">
+          <h2>Taxonomies</h2>
+
+          <p>To retrieve a list off all available taxonomies available for taxonomy filtering simply call the <code>taxonomies</code> endpoint.</p>
+
+          <h4>The Taxonomies Response Document</h4>
+          <dl>
+            <dt>parent_id:</dt> <dd>Identifier of a parent taxonomy</dd>
+            <dt>name:</dt> <dd>The name of the taxonomy</dd>
+            <dt>id:</dt> <dd>A unique integer identifier for the taxonomy</dd>
+          </dl>
+        </td>
+
+        </td>
+        <td class="code">
+            <h4>Definition</h4>
+            <p><code>GET http://api.seatgeek.com/2/taxonomies</code></p>
+          </div>
+
+          <div class="example-request">
+            <h4>Example Request</h4>
+            <p><code>$ curl 'http://api.seatgeek.com/2/taxonomies'</code></p>
+          </div>
+          <div class="example-response" id="performer-response-document">
+            <h4>Example Response Document</h4>
+            <pre><code>{
+  "taxonomies": [
+      {
+        "parent_id": null,
+        "id": 1000000,
+        "name": "sports"
+      },
+      { ... }
+  ]
+}</code></pre>
+          </div>
+        </td>
+      </tr>
+
+      <!-- <tr class="new-section" id="example-apps">
+        <td class="docs">
+          <h2>Built on the SeatGeek Platform</h2>
+          <ul>
+            <li><a href="http://liverover.com">LiveRover</a></li>
+          </ul>
+
+          <p>Built an app on the SeatGeek platform and want to add it to this list? Just <a href="mailto:hi@seatgeek.com">email us</a>.</p>
+
+        </td>
+        <td class="code"></td>
+      </tr> -->
+
+      <tr class="new-section" id="support">
+        <td class="docs">
+          <h2>Support</h2>
+          <p>If you need any additional help with the SeatGeek Platform, you can send us an email to <a href="mailto:hi@seatgeek.com">hi@seatgeek.com</a> or post a message on our <a href="https://discussions.zoho.com/sgplatform">support forum</a>.
+          <p>The documentation on SeatGeek API V1 is available online at <a href="/old.html">this link</a>.</p>
+        </td>
+        <td class="code"></td>
+      </tr>
+
+      <tr><!-- add a bit of padding -->
+        <td class="docs"></td>
+        <td class="code"></td>
+      </tr>
+      </tbody>
 </div>
 
-<div id="prebuilt-widgets">
-  <h2>Prebuilt widgets</h2>
-  <p>We've built a widget that you can easily include on your site if interacting directly with the API isn't for you.</p>
-  <table>
-    <tr>
-      <td style>
-        <div class="sg_widget sg_widget_upcoming_for_teamband" for="new-york-yankees"></div>
-        <p style="text-align:center;">find more <a href="http://seatgeek.com/" target="_blank">sold out tickets</a></p>
-        <script type="text/javascript" src="http://static.seatgeek.com/widget/js/main.js"></script>
-      </td>
-      <td>
-        <div class="sg_widget sg_widget_in_your_area" for="concerts"></div>
-        <p style="text-align:center;">find more <a href="http://seatgeek.com/" target="_blank">sold out tickets</a></p>
-        <script type="text/javascript" src="http://static.seatgeek.com/widget/js/main.js"></script>
-      </td>
-    </tr>
-  </table>
-  </div>
-</div>
+</body>
+
+</html>
